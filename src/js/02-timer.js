@@ -16,6 +16,7 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
     minuteIncrement: 1,
+
     onClose(selectedDates) {
         const finishTime = selectedDates[0].getTime();
         console.log(selectedDates);
@@ -27,34 +28,8 @@ const options = {
             return;
         }
         else {refs.startBtn.removeAttribute('disabled')}
-  const timer = {
-    timerId: null,
-    isActive: false,
-      start() {
-        if (this.isActive) {
-            return;
-        }
-        this.isActive = true;
-        this.timerId = setInterval(() => {
-            refs.startBtn.setAttribute('disabled', true);
-            const currentTime = Date.now();
-            const deltaTime = finishTime - currentTime;
-            const time = convertMs(deltaTime);
-            console.log(finishTime);
-            refs.days.innerHTML = time.days;
-            refs.hours.innerHTML = time.hours;
-            refs.minutes.innerHTML = time.minutes;
-            refs.seconds.innerHTML = time.seconds;
-            if (time.days === "00" && time.hours === "00" && time.minutes === "00" && time.seconds === "00") {
-                clearInterval(this.timerId);
-                refs.startBtn.removeAttribute('disabled');
-                this.isActive = true;
-                Notiflix.Report.success('Time is over');
-            }
-        }, 1000);
-    }
-        }
-        refs.startBtn.addEventListener("click", () => { timer.start() });
+  refs.startBtn.addEventListener("click", () => { timer.start(finishTime) });
+       
     },
 };
 flatpickr(inputData, options);
@@ -71,4 +46,33 @@ function convertMs(ms) {
 }
 function addLeadingZero(value) {
     return String(value).padStart(2, '0');
+}
+
+   const timer = {
+    timerId: null,
+    isActive: false,
+      start(deadline) {
+        if (this.isActive) {
+            return;
+        }
+        this.isActive = true;
+        this.timerId = setInterval(() => {
+            refs.startBtn.setAttribute('disabled', true);
+            const currentTime = Date.now();
+            const deltaTime = deadline - currentTime;
+            const time = convertMs(deltaTime);
+            console.log(time);
+            refs.days.innerHTML = time.days;
+            refs.hours.innerHTML = time.hours;
+            refs.minutes.innerHTML = time.minutes;
+            refs.seconds.innerHTML = time.seconds;
+            if (time.days === "00" && time.hours === "00" && time.minutes === "00" && time.seconds === "00") {
+                clearInterval(this.timerId);
+                refs.startBtn.removeAttribute('disabled');
+                this.isActive = true;
+                Notiflix.Report.success('Time is over');
+            }
+        }, 1000);
+    }
+        // }
 }
