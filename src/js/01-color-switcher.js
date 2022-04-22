@@ -7,10 +7,11 @@ let timerId = null;
 refs.stopBtn.setAttribute('disabled', true);
 
 refs.startBtn.addEventListener("click", () => {
+  refs.startBtn.setAttribute('disabled', true);
  timerId = setInterval(() => {
     const color = getRandomHexColor();
      document.body.style.backgroundColor = color;
-     refs.startBtn.setAttribute('disabled', true);
+     
      refs.stopBtn.removeAttribute('disabled');
   }, 1000);
 });

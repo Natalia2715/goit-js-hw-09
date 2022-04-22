@@ -28,7 +28,10 @@ const options = {
             return;
         }
         else {refs.startBtn.removeAttribute('disabled')}
-  refs.startBtn.addEventListener("click", () => { timer.start(finishTime) });
+        refs.startBtn.addEventListener("click", () => {
+            timer.start(finishTime);
+            refs.startBtn.setAttribute('disabled', true);
+        inputData.setAttribute('disabled', true)});
        
     },
 };
@@ -57,7 +60,7 @@ function addLeadingZero(value) {
         }
         this.isActive = true;
         this.timerId = setInterval(() => {
-            refs.startBtn.setAttribute('disabled', true);
+            
             const currentTime = Date.now();
             const deltaTime = deadline - currentTime;
             const time = convertMs(deltaTime);

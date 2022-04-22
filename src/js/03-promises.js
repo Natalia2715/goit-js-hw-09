@@ -36,9 +36,10 @@ const getInput = (event) => {
     startDelay += finishDelay;
     console.log(startDelay);
   }
+  event.currentTarget.reset();
 }
        
-   form.addEventListener("submit", getInput);
+form.addEventListener("submit", getInput);
 
 function createPromise(position, delay) {
 
@@ -55,3 +56,4 @@ function createPromise(position, delay) {
     }, delay)
   })
 }
+
